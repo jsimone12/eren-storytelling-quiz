@@ -354,7 +354,7 @@ function submitCapture(){
   const qualified = qualIdx!==null && qualIdx!==QUALIFIER.disqualifyIndex;
   const payload={firstName:name,lastName:lname,phone,email,style:RESULTS[style].name,styleKey:style,qualified,investment:qualIdx!==null?QUALIFIER.a[qualIdx].value:null,answers,ts:new Date().toISOString()};
   if(CONFIG.captureEndpoint){
-    fetch(CONFIG.captureEndpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload)}).catch(()=>{});
+    fetch(CONFIG.captureEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(()=>{});
   } else { console.log('[demo mode] lead captured:',payload); }
   renderResult(style,qualified); show('result');
 }
