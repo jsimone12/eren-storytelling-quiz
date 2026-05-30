@@ -1,0 +1,391 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+<meta charset="UTF-8">
+<meta name="viewport" content="width=device-width, initial-scale=1.0">
+<title>What's Your Storytelling Style?</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,500;0,600;1,500;1,600&family=Playfair+Display:ital,wght@0,500;0,600;0,700;1,500&family=DM+Sans:opsz,wght@9..40,400;9..40,500;9..40,600&display=swap" rel="stylesheet">
+<style>
+  :root{
+    --black:#120A0B;
+    --wine:#3A1417;
+    --wine-2:#4E191D;
+    --panel:#260E10;
+    --panel-2:#310F12;
+    --gold:#C2A04E;
+    --gold-light:#E3C883;
+    --gold-deep:#937131;
+    --cream:#F1E7D6;
+    --cream-soft:rgba(241,231,214,0.70);
+    --line:rgba(194,160,78,0.24);
+    --line-soft:rgba(194,160,78,0.12);
+  }
+  *{box-sizing:border-box;margin:0;padding:0}
+  html,body{height:100%}
+  body{
+    font-family:'DM Sans',sans-serif;
+    color:var(--cream);line-height:1.6;
+    background:
+      radial-gradient(120% 80% at 80% 0%, rgba(194,160,78,0.16), transparent 55%),
+      radial-gradient(100% 90% at 0% 100%, rgba(78,25,29,0.65), transparent 60%),
+      linear-gradient(165deg, #1B0A0C 0%, #2F1114 45%, #160A0B 100%);
+    background-attachment:fixed;
+    -webkit-font-smoothing:antialiased;position:relative;overflow-x:hidden;
+  }
+  body::after{
+    content:"";position:fixed;inset:0;z-index:0;pointer-events:none;opacity:0.6;mix-blend-mode:overlay;
+    background-image:url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='150' height='150'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='0.85' numOctaves='2' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)' opacity='0.06'/%3E%3C/svg%3E");
+  }
+  .stage{position:relative;z-index:1;min-height:100%;display:flex;align-items:center;justify-content:center;padding:48px 22px}
+  .card{width:100%;max-width:640px}
+  .screen{display:none;animation:rise .7s cubic-bezier(.2,.7,.2,1) both}
+  .screen.active{display:block}
+  @keyframes rise{from{opacity:0;transform:translateY(18px)}to{opacity:1;transform:translateY(0)}}
+
+  .kicker{font-size:11.5px;letter-spacing:.36em;text-transform:uppercase;color:var(--gold);font-weight:600;
+    display:flex;align-items:center;gap:12px;justify-content:center}
+  .kicker::before,.kicker::after{content:"";height:1px;width:30px;background:var(--gold);opacity:.55}
+
+  h1.display{font-family:'Playfair Display',serif;font-weight:600;
+    font-size:clamp(40px,7.6vw,66px);line-height:1.03;letter-spacing:-.01em;text-align:center;margin:22px 0 0;color:var(--cream)}
+  .serif-it{font-family:'Cormorant Garamond',serif;font-style:italic;font-weight:600;color:var(--gold-light)}
+  .lede{font-family:'Cormorant Garamond',serif;font-size:clamp(20px,3.4vw,25px);line-height:1.5;
+    color:var(--cream-soft);text-align:center;max-width:500px;margin:26px auto 0}
+  .lede em{font-style:italic;color:var(--cream)}
+
+  .btn{appearance:none;border:none;cursor:pointer;font-family:'DM Sans',sans-serif;
+    background:linear-gradient(135deg,var(--gold-light),var(--gold));color:#1c0e07;
+    font-size:15px;font-weight:600;letter-spacing:.02em;padding:17px 40px;border-radius:999px;
+    transition:transform .25s cubic-bezier(.2,.7,.2,1),box-shadow .25s,filter .25s;
+    box-shadow:0 20px 50px -22px rgba(194,160,78,.7)}
+  .btn:hover{transform:translateY(-2px);filter:brightness(1.06);box-shadow:0 26px 60px -22px rgba(194,160,78,.85)}
+  .btn:active{transform:translateY(0)}
+  .btn-row{display:flex;justify-content:center;margin-top:38px}
+  .meta-note{text-align:center;color:var(--cream-soft);font-size:13px;margin-top:18px;opacity:.8}
+
+  .ornament{display:flex;align-items:center;justify-content:center;gap:14px;margin-top:34px;color:var(--gold);font-size:18px}
+  .ornament span{height:1px;width:62px;background:linear-gradient(90deg,transparent,var(--gold),transparent)}
+
+  .progress-wrap{margin-bottom:34px}
+  .progress-top{display:flex;justify-content:space-between;align-items:baseline;margin-bottom:12px}
+  .q-count{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:19px;color:var(--cream-soft)}
+  .q-count b{font-style:normal;font-family:'DM Sans';font-weight:600;color:var(--gold-light);font-size:15px}
+  .q-label{font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;color:var(--gold);font-weight:600;opacity:.85}
+  .bar{height:3px;background:var(--line-soft);border-radius:99px;overflow:hidden}
+  .bar > i{display:block;height:100%;background:linear-gradient(90deg,var(--gold-deep),var(--gold-light));border-radius:99px;width:0;transition:width .5s cubic-bezier(.2,.7,.2,1)}
+
+  .question{font-family:'Playfair Display',serif;font-weight:500;font-size:clamp(25px,4.8vw,34px);line-height:1.16;letter-spacing:-.01em;margin-bottom:30px;color:var(--cream)}
+  .options{display:flex;flex-direction:column;gap:13px}
+  .opt{text-align:left;cursor:pointer;background:var(--panel);border:1px solid var(--line);border-radius:15px;
+    padding:18px 20px;font-size:16px;color:var(--cream);display:flex;align-items:center;gap:16px;
+    transition:transform .2s,border-color .2s,background .2s,box-shadow .2s;font-family:'DM Sans',sans-serif;line-height:1.45;width:100%}
+  .opt:hover{transform:translateX(4px);border-color:var(--gold);background:var(--panel-2);box-shadow:0 14px 34px -22px rgba(194,160,78,.5)}
+  .opt .dot{flex:0 0 auto;width:23px;height:23px;border-radius:50%;border:1.5px solid var(--line);display:grid;place-items:center;transition:border-color .2s}
+  .opt .dot::after{content:"";width:9px;height:9px;border-radius:50%;background:var(--gold-light);transform:scale(0);transition:transform .2s}
+  .opt.sel{border-color:var(--gold);background:var(--panel-2)}
+  .opt.sel .dot{border-color:var(--gold)}
+  .opt.sel .dot::after{transform:scale(1)}
+
+  .nav{display:flex;justify-content:flex-start;align-items:center;margin-top:28px}
+  .back{background:none;border:none;cursor:pointer;font-family:'DM Sans';font-size:14px;color:var(--cream-soft);font-weight:500;padding:8px 4px;opacity:.75;transition:opacity .2s,color .2s}
+  .back:hover{opacity:1;color:var(--gold-light)}
+  .back[disabled]{opacity:0;pointer-events:none}
+
+  .field{margin-top:18px;text-align:left}
+  .field label{display:block;font-size:11.5px;letter-spacing:.16em;text-transform:uppercase;color:var(--cream-soft);font-weight:600;margin-bottom:8px}
+  .field input{width:100%;font-family:'DM Sans';font-size:16px;color:var(--cream);background:var(--panel);border:1px solid var(--line);border-radius:12px;padding:15px 17px;transition:border-color .2s,box-shadow .2s}
+  .field input::placeholder{color:rgba(241,231,214,.4)}
+  .field input:focus{outline:none;border-color:var(--gold);box-shadow:0 0 0 3px rgba(194,160,78,.16)}
+  .err{color:var(--gold-light);font-size:13px;margin-top:12px;min-height:18px;text-align:center}
+
+  .res-name{font-family:'Playfair Display',serif;font-weight:700;font-size:clamp(38px,7.4vw,62px);line-height:1.04;text-align:center;margin:14px 0 0;letter-spacing:-.015em;color:var(--cream)}
+  .res-tag{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:clamp(21px,3.6vw,26px);text-align:center;color:var(--gold-light);margin:16px auto 0;max-width:470px;line-height:1.4}
+  .res-body{font-size:16.5px;color:var(--cream);margin:30px 0 0;line-height:1.66}
+  .block{margin-top:24px;background:var(--panel);border:1px solid var(--line);border-radius:18px;padding:24px 24px 22px}
+  .block h3{font-family:'DM Sans';font-size:11.5px;letter-spacing:.22em;text-transform:uppercase;color:var(--gold);font-weight:600;margin-bottom:14px;display:flex;align-items:center;gap:9px}
+  .block h3 .num{font-family:'Cormorant Garamond',serif;font-style:italic;font-size:20px;color:var(--gold-light);letter-spacing:0;text-transform:none}
+  .block ul{list-style:none;display:flex;flex-direction:column;gap:11px}
+  .block li{position:relative;padding-left:22px;font-size:15.5px;line-height:1.5}
+  .block li::before{content:"";position:absolute;left:2px;top:10px;width:6px;height:6px;border-radius:50%;background:var(--gold);opacity:.8}
+  .block p{font-size:15.5px;line-height:1.6}
+  .watch{background:transparent;border:1px dashed var(--line)}
+  .watch h3{color:var(--cream-soft)}
+
+  .reward{margin-top:24px;text-align:center;border:1px solid var(--line);border-radius:18px;padding:26px 24px;background:linear-gradient(160deg,var(--panel-2),var(--panel))}
+  .reward .rk{color:var(--gold);font-size:10.5px;letter-spacing:.28em;text-transform:uppercase;font-weight:600}
+  .reward p{font-family:'Cormorant Garamond',serif;font-size:20px;color:var(--cream);margin-top:12px;line-height:1.45}
+  .reward .em{color:var(--gold-light);font-style:italic}
+
+  .cta{margin-top:24px;text-align:center;background:linear-gradient(135deg,var(--wine-2),var(--wine));border:1px solid var(--gold);border-radius:22px;padding:38px 30px;position:relative;overflow:hidden;box-shadow:0 30px 70px -34px rgba(0,0,0,.8)}
+  .cta::before{content:"";position:absolute;inset:0;background:radial-gradient(120% 100% at 100% 0%,rgba(226,200,131,.18),transparent 55%);pointer-events:none}
+  .cta .ck{color:var(--gold-light);font-size:10.5px;letter-spacing:.3em;text-transform:uppercase;font-weight:600}
+  .cta h2{font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(24px,4.2vw,30px);line-height:1.2;margin:14px auto 0;max-width:430px;color:var(--cream)}
+  .cta p{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--cream-soft);margin:14px auto 0;max-width:400px;line-height:1.45}
+  .cta a.btn{margin-top:24px;display:inline-block;text-decoration:none}
+
+  .restart{display:block;margin:26px auto 0;background:none;border:none;cursor:pointer;color:var(--cream-soft);font-family:'DM Sans';font-size:13px;text-decoration:underline;text-underline-offset:3px;opacity:.75}
+  .restart:hover{opacity:1;color:var(--gold-light)}
+  .reveal{opacity:0;animation:rise .6s cubic-bezier(.2,.7,.2,1) forwards}
+  .hidden{display:none!important}
+
+  @media(max-width:520px){.stage{padding:34px 16px}.cta{padding:30px 22px}.block{padding:20px}}
+</style>
+</head>
+<body>
+<div class="stage">
+  <div class="card">
+
+    <section class="screen active" id="s-intro">
+      <p class="kicker">A 60-second quiz</p>
+      <h1 class="display">What's your<br><span class="serif-it">storytelling style?</span></h1>
+      <p class="lede">You want to create. But every time you pick up your phone, you freeze. <em>You don't know what to film. You don't know what to say.</em> But more people want to hear your story than you realize, you've just got to find your style.</p>
+      <div class="ornament"><span></span>&#10038;<span></span></div>
+      <div class="btn-row"><button class="btn" id="start">Find my style</button></div>
+      <p class="meta-note">6 quick questions. No right answers, only your way of seeing.</p>
+    </section>
+
+    <section class="screen" id="s-quiz">
+      <div class="progress-wrap">
+        <div class="progress-top">
+          <span class="q-count"><b id="qNow">01</b> &nbsp;of&nbsp; 06</span>
+          <span class="q-label">Your way of seeing</span>
+        </div>
+        <div class="bar"><i id="barFill"></i></div>
+      </div>
+      <h2 class="question" id="qText"></h2>
+      <div class="options" id="qOpts"></div>
+      <div class="nav"><button class="back" id="back" disabled>&larr; Back</button></div>
+    </section>
+
+    <section class="screen" id="s-capture">
+      <p class="kicker">Your style is ready</p>
+      <h1 class="display" style="font-size:clamp(30px,5.6vw,46px)">Where should I send <span class="serif-it">your style?</span></h1>
+      <p class="lede">Your result and a custom framework for your style, the exact things to film and say, sent straight to your inbox.</p>
+      <div style="max-width:420px;margin:30px auto 0">
+        <div class="field"><label for="fname">First name</label><input id="fname" type="text" placeholder="Your first name" autocomplete="given-name"></div>
+        <div class="field"><label for="lname">Last name</label><input id="lname" type="text" placeholder="Your last name" autocomplete="family-name"></div>
+        <div class="field"><label for="phone">Phone</label><input id="phone" type="tel" placeholder="(555) 555-5555" autocomplete="tel"></div>
+        <div class="field"><label for="email">Email</label><input id="email" type="email" placeholder="you@email.com" autocomplete="email"></div>
+        <p class="err" id="capErr"></p>
+        <div class="btn-row" style="margin-top:6px"><button class="btn" id="reveal">Reveal my style</button></div>
+        <p class="meta-note">No spam. Just your style, your framework, and the occasional story worth telling.</p>
+      </div>
+    </section>
+
+    <section class="screen" id="s-result">
+      <p class="kicker" style="justify-content:center">Your storytelling style is</p>
+      <h1 class="res-name" id="rName"></h1>
+      <p class="res-tag" id="rTag"></p>
+      <p class="res-body" id="rBody"></p>
+
+      <div class="block reveal" style="animation-delay:.05s">
+        <h3><span class="num">01</span> What to film</h3>
+        <ul id="rFilm"></ul>
+      </div>
+      <div class="block reveal" style="animation-delay:.12s">
+        <h3><span class="num">02</span> What to say</h3>
+        <p id="rSay"></p>
+      </div>
+      <div class="block watch reveal" style="animation-delay:.19s">
+        <h3><span class="num">03</span> Your watch-out</h3>
+        <p id="rWatch"></p>
+      </div>
+
+      <div class="reward reveal" style="animation-delay:.26s">
+        <span class="rk">Your reward</span>
+        <p>Your <span class="em" id="rwName"></span> framework is on its way to your inbox, your blueprint for what to film and say, every week.</p>
+      </div>
+
+      <div class="cta reveal hidden" id="ctaBlock" style="animation-delay:.32s">
+        <span class="ck">You're ready for more</span>
+        <h2>Let's talk through your style and map your first month of content together.</h2>
+        <p>A free call to turn your style into a plan you can actually post.</p>
+        <a class="btn" id="ctaBtn" href="#">Book my call with Eren</a>
+      </div>
+
+      <button class="restart" id="restart">Retake the quiz</button>
+    </section>
+
+  </div>
+</div>
+
+<script>
+const CONFIG = {
+  // Lead destination. Paste a Sheetmonkey / GHL / EmailJS webhook URL.
+  // Blank = demo mode (logs to console, no send). Payload includes
+  // name, email, style, qualified flag, and investment answer for routing.
+  captureEndpoint: "",
+  // Qualified-lead call-booking button. Point at Eren's calendar link.
+  ctaUrl: "#"
+};
+
+const QUESTIONS = [
+  { q:"What type of content always makes you stop your scroll and immediately sucks you in?", a:[
+    { t:"The dreamy, aesthetic videos that make everyday life look cinematic", type:"romantic" },
+    { t:"The real, unfiltered creators whose everyday lives you're somehow hooked on", type:"documentarian" },
+    { t:"The how-tos and breakdowns that actually teach you something useful", type:"guide" },
+  ]},
+  { q:"When you sit down to create content, what part do you feel like you don't have to try hard at?", a:[
+    { t:"Setting a mood with the right visuals, music, and little details", type:"romantic" },
+    { t:"Hitting record and letting your real life carry the story", type:"documentarian" },
+    { t:"Explaining something in a way that finally makes it click for people", type:"guide" },
+  ]},
+  { q:"What is the compliment you hear most often about your content?", a:[
+    { t:"That it looks really good and has a beautiful aesthetic", type:"romantic" },
+    { t:"That it feels authentic and that they get a genuine look at my life", type:"documentarian" },
+    { t:"That it explains things in better ways than they've heard before", type:"guide" },
+  ]},
+  { q:"What is the main connection you want people to have with your content?", a:[
+    { t:"That it captures them emotionally just by how it looks and sounds", type:"romantic" },
+    { t:"That it feels so honest and vulnerable that they're able to see themselves in it", type:"documentarian" },
+    { t:"That the information is so easy to understand they feel like they can immediately take action on it themselves", type:"guide" },
+  ]},
+  { q:"When you think about creating content you'd make money from, what is always present?", a:[
+    { t:"It's a polished, curated experience that people are captivated by", type:"romantic" },
+    { t:"Consistently realistic POV that makes my audience feel genuinely connected to me", type:"documentarian" },
+    { t:"Clear, useful information that people can apply right away or share with a friend", type:"guide" },
+  ]},
+];
+
+// Q6 financial qualifier. Index 0 is the only disqualifying answer.
+const QUALIFIER = {
+  q:"How much would you invest in improving your content if you were finally able to get paid for it?",
+  disqualifyIndex:0,
+  a:[
+    { t:"I still don't think you can make money from content so I wouldn't spend any on making it", value:"none" },
+    { t:"I could start with $50 to $100", value:"50_100" },
+    { t:"For real results I would put up $250 no problem", value:"250" },
+    { t:"I'm really trying to quit my job so I would invest $500 or more", value:"500_plus" },
+  ]
+};
+
+const RESULTS = {
+  romantic:{
+    name:"Romanticizing Reality",
+    tag:"You turn ordinary moments into something worth feeling.",
+    body:"You do not need a dramatic life to make beautiful content. You already see what most people walk right past: the way light lands on a counter, the quiet of an early morning, the texture of a slow afternoon. Your gift is mood, and mood is what makes people stay.",
+    film:[
+      "Your morning ritual, slowed down: the pour, the steam, the light",
+      "\u201CA day in my soft life\u201D sequences set to music",
+      "The small beautiful details others ignore: hands, weather, your city",
+      "A gentle before and after of a space, a meal, a moment",
+    ],
+    say:"Let the visuals lead, then add one honest line that names the feeling. \u201CThis is the kind of morning I used to be too busy to notice.\u201D One true sentence does more than a paragraph.",
+    watch:"Beauty without a point scrolls right past. Anchor each post to one small feeling or idea, so people do not just admire it, they save it.",
+  },
+  documentarian:{
+    name:"Digital Documentarian",
+    tag:"You prove that a real life is worth watching.",
+    body:"You do not perform, you bring people along. Your gift is presence: you make the ordinary feel intimate, and people follow because it feels like being let in. That \u201Cmy life is too boring to film\u201D story does not hold up. Boring is just undocumented.",
+    film:[
+      "Day-in-the-life sequences with natural, off-the-cuff narration",
+      "\u201CCome with me to...\u201D anything: an errand, a class, a new city",
+      "Real-time process: making, building, trying, failing, fixing",
+      "The unpolished in-between moments most people cut",
+    ],
+    say:"Narrate like you are texting a friend what you are up to. Low pressure, high honesty. The realness is the value, so do not dress it up.",
+    watch:"Documenting with no thread can feel aimless. Give each post a tiny destination: a question you answer or a moment you build toward.",
+  },
+  guide:{
+    name:"Guidance Guru",
+    tag:"You make people smarter, and they come back for more.",
+    body:"You see the steps other people miss. Your gift is clarity: you take something tangled and make it simple, which is exactly what keeps an audience loyal. You teach without making anyone feel small, and that builds trust fast.",
+    film:[
+      "\u201CHow I actually do X\u201D walkthroughs, start to finish",
+      "Quick tips that fix one specific, nagging frustration",
+      "Myth versus truth, or the mistake almost everyone makes",
+      "Breakdowns of something you know that plenty of people want",
+    ],
+    say:"Lead with the result or the mistake, then deliver the steps. \u201CMost people do this. Here is what works instead.\u201D One idea per post so it lands.",
+    watch:"You may hold back because you do not feel \u201Cexpert enough.\u201D You only need to be one step ahead of the person you are helping.",
+  },
+};
+
+const screens={intro:document.getElementById('s-intro'),quiz:document.getElementById('s-quiz'),capture:document.getElementById('s-capture'),result:document.getElementById('s-result')};
+let current=0; const TOTAL=QUESTIONS.length+1; const answers=new Array(QUESTIONS.length).fill(null); let qualIdx=null;
+
+function show(name){Object.values(screens).forEach(s=>s.classList.remove('active'));screens[name].classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
+
+const qText=document.getElementById('qText'),qOpts=document.getElementById('qOpts'),qNow=document.getElementById('qNow'),barFill=document.getElementById('barFill'),backBtn=document.getElementById('back');
+
+function renderQuestion(){
+  const isQual = current >= QUESTIONS.length;
+  const item = isQual ? QUALIFIER : QUESTIONS[current];
+  const sel = isQual ? qualIdx : answers[current];
+  qNow.textContent=String(current+1).padStart(2,'0');
+  barFill.style.width=((current)/TOTAL*100)+'%';
+  qText.textContent=item.q; qOpts.innerHTML='';
+  item.a.forEach((opt,i)=>{
+    const b=document.createElement('button');
+    b.className='opt'+(sel===i?' sel':'');
+    b.innerHTML='<span class="dot"></span><span>'+opt.t+'</span>';
+    b.addEventListener('click',()=>choose(i));
+    qOpts.appendChild(b);
+  });
+  backBtn.disabled=current===0;
+}
+function choose(i){
+  if(current>=QUESTIONS.length){ qualIdx=i; } else { answers[current]=i; }
+  [...qOpts.children].forEach((c,idx)=>c.classList.toggle('sel',idx===i));
+  barFill.style.width=((current+1)/TOTAL*100)+'%';
+  setTimeout(()=>{ if(current<TOTAL-1){current++;renderQuestion();} else {show('capture');} },330);
+}
+backBtn.addEventListener('click',()=>{if(current>0){current--;renderQuestion();}});
+document.getElementById('start').addEventListener('click',()=>{current=0;renderQuestion();show('quiz');});
+
+const capErr=document.getElementById('capErr');
+document.getElementById('reveal').addEventListener('click',submitCapture);
+document.getElementById('email').addEventListener('keydown',e=>{if(e.key==='Enter')submitCapture();});
+function submitCapture(){
+  const name=document.getElementById('fname').value.trim();
+  const lname=document.getElementById('lname').value.trim();
+  const phone=document.getElementById('phone').value.trim();
+  const email=document.getElementById('email').value.trim();
+  const okEmail=/^[^\s@]+@[^\s@]+\.[^\s@]+$/.test(email);
+  const okPhone=phone.replace(/\D/g,'').length>=10;
+  if(!name){capErr.textContent="Pop your first name in so I can make it personal.";return;}
+  if(!lname){capErr.textContent="Add your last name too.";return;}
+  if(!okPhone){capErr.textContent="That phone number does not look complete. Mind checking it?";return;}
+  if(!okEmail){capErr.textContent="That email does not look quite right. Mind checking it?";return;}
+  capErr.textContent="";
+  const style=scoreResult();
+  const qualified = qualIdx!==null && qualIdx!==QUALIFIER.disqualifyIndex;
+  const payload={firstName:name,lastName:lname,phone,email,style:RESULTS[style].name,styleKey:style,qualified,investment:qualIdx!==null?QUALIFIER.a[qualIdx].value:null,answers,ts:new Date().toISOString()};
+  if(CONFIG.captureEndpoint){
+    fetch(CONFIG.captureEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(()=>{});
+  } else { console.log('[demo mode] lead captured:',payload); }
+  renderResult(style,qualified); show('result');
+}
+function scoreResult(){
+  const tally={romantic:0,documentarian:0,guide:0};
+  answers.forEach((ans,qi)=>{if(ans!==null){tally[QUESTIONS[qi].a[ans].type]++;}});
+  const order=['romantic','documentarian','guide']; let best=order[0];
+  order.forEach(k=>{if(tally[k]>tally[best])best=k;});
+  return best;
+}
+function renderResult(key,qualified){
+  const r=RESULTS[key];
+  document.getElementById('rName').textContent=r.name;
+  document.getElementById('rTag').textContent=r.tag;
+  document.getElementById('rBody').textContent=r.body;
+  const filmUl=document.getElementById('rFilm'); filmUl.innerHTML='';
+  r.film.forEach(f=>{const li=document.createElement('li');li.textContent=f;filmUl.appendChild(li);});
+  document.getElementById('rSay').textContent=r.say;
+  document.getElementById('rWatch').textContent=r.watch;
+  document.getElementById('rwName').textContent=r.name;
+  const cta=document.getElementById('ctaBlock');
+  if(qualified){cta.classList.remove('hidden');document.getElementById('ctaBtn').href=CONFIG.ctaUrl;}
+  else{cta.classList.add('hidden');}
+}
+document.getElementById('restart').addEventListener('click',()=>{
+  current=0;answers.fill(null);qualIdx=null;
+  ['fname','lname','phone','email'].forEach(id=>document.getElementById(id).value='');
+  capErr.textContent='';
+  show('intro');
+});
+renderQuestion();
+</script>
+</body>
+</html>
