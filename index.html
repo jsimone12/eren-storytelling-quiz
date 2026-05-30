@@ -216,7 +216,7 @@ const CONFIG = {
   // Lead destination. Paste a Sheetmonkey / GHL / EmailJS webhook URL.
   // Blank = demo mode (logs to console, no send). Payload includes
   // name, email, style, qualified flag, and investment answer for routing.
-  captureEndpoint: "",
+  captureEndpoint: "https://services.leadconnectorhq.com/hooks/DvWTrdD23UD09zv6GgZj/webhook-trigger/5d3fcc3a-edfd-4e49-b382-f8e4f3a606ca",
   // Qualified-lead call-booking button. Point at Eren's calendar link.
   ctaUrl: "#"
 };
@@ -354,7 +354,7 @@ function submitCapture(){
   const qualified = qualIdx!==null && qualIdx!==QUALIFIER.disqualifyIndex;
   const payload={firstName:name,lastName:lname,phone,email,style:RESULTS[style].name,styleKey:style,qualified,investment:qualIdx!==null?QUALIFIER.a[qualIdx].value:null,answers,ts:new Date().toISOString()};
   if(CONFIG.captureEndpoint){
-    fetch(CONFIG.captureEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(()=>{});
+    fetch(CONFIG.captureEndpoint,{method:'POST',mode:'no-cors',headers:{'Content-Type':'text/plain;charset=UTF-8'},body:JSON.stringify(payload)}).catch(()=>{});
   } else { console.log('[demo mode] lead captured:',payload); }
   renderResult(style,qualified); show('result');
 }
