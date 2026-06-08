@@ -194,6 +194,13 @@
         <button class="btn" id="guideBtn">Get my guide &nbsp;&middot;&nbsp; $7.99</button>
       </div>
 
+      <div class="bundle reveal hidden" id="nurtureBlock" style="animation-delay:.1s">
+        <span class="bk">A deeper look</span>
+        <h3>This is your style</h3>
+        <p id="nurtureBody" style="max-width:460px"></p>
+        <p style="max-width:460px;margin-top:14px">This is just the surface of your style. Keep an eye on your inbox, I'm sending you more on how to actually use it.</p>
+      </div>
+
       <button class="restart" id="restart">Retake the quiz</button>
     </section>
 
@@ -277,6 +284,7 @@ const RESULTS = {
     name:"The Romanticizer",
     tag:"You find beauty in everyday moments.",
     body:"You naturally tell stories by turning ordinary moments, the light, the little rituals, the in-between, into something people actually feel.",
+    deep:"You're not waiting for a more interesting life, you're learning to pay attention to the one you've got. The best stories are hiding in the small stuff: the coffee, the drive home, the song that makes you stop and feel something. Romanticize the ordinary, the Target run, the quiet morning, and move through it like the main character. That's what makes people feel it too.",
     film:[
       "Your morning ritual, slowed down: the pour, the steam, the light",
       "\u201CA day in my soft life\u201D sequences set to music",
@@ -290,6 +298,7 @@ const RESULTS = {
     name:"The Digital Documentarian",
     tag:"You document your life instead of performing it.",
     body:"You naturally tell stories by bringing people along for the real, everyday moments most people never think to film.",
+    deep:"Most creators wait until something exciting happens to hit record. You hit record first. Film the in-between, the parking lot, the elevator, the coffee pouring, and narrate it like a voice note to your best friend. The rule is simple: stop asking if it's interesting enough to post, and start asking if you'd want to remember it a year from now.",
     film:[
       "Day-in-the-life sequences with natural, off-the-cuff narration",
       "\u201CCome with me to...\u201D anything: an errand, a class, a new city",
@@ -303,6 +312,7 @@ const RESULTS = {
     name:"The Teacher",
     tag:"You turn what you know into content people save.",
     body:"You naturally tell stories by making things clear, taking what you know and handing it over so people can use it right away.",
+    deep:"You don't need a degree or a million followers, you just need to be one step ahead of someone else. Teach one thing, solve one problem, and explain it like you're talking to your favorite cousin. No jargon, no fluff. The internet doesn't reward the smartest people, it rewards the clearest, so don't try to impress people, help them. That's the kind of content people save.",
     film:[
       "\u201CHow I actually do X\u201D walkthroughs, start to finish",
       "Quick tips that fix one specific, nagging frustration",
@@ -367,7 +377,7 @@ function submitCapture(){
   if(CONFIG.captureEndpoint){
     fetch(CONFIG.captureEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(()=>{});
   } else { console.log('[demo mode] lead captured:',payload); }
-  renderResult(style); show('result');
+  renderResult(style, qualified); show('result');
 }
 function scoreResult(){
   const tally={romantic:0,documentarian:0,guide:0};
@@ -376,13 +386,16 @@ function scoreResult(){
   order.forEach(k=>{if(tally[k]>tally[best])best=k;});
   return best;
 }
-function renderResult(key){
+function renderResult(key, qualified){
   currentStyle=key;
   const r=RESULTS[key];
   document.getElementById('rName').textContent=r.name;
   document.getElementById('rTag').textContent=r.tag;
   document.getElementById('rBody').textContent=r.body;
   document.getElementById('guideName').textContent=r.name;
+  const g=document.getElementById('guideBlock'), n=document.getElementById('nurtureBlock');
+  if(qualified){ g.classList.remove('hidden'); n.classList.add('hidden'); }
+  else { g.classList.add('hidden'); n.classList.remove('hidden'); document.getElementById('nurtureBody').textContent=r.deep; }
 }
 // guide CTA -> order-bump step (bundle offered before checkout)
 document.getElementById('guideBtn').addEventListener('click',()=>{
