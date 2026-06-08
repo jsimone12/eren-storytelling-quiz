@@ -124,6 +124,13 @@
   .cta h2{font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(24px,4.2vw,30px);line-height:1.2;margin:14px auto 0;max-width:430px;color:var(--cream)}
   .cta p{font-family:'Cormorant Garamond',serif;font-size:19px;color:var(--cream-soft);margin:14px auto 0;max-width:400px;line-height:1.45}
   .cta a.btn{margin-top:24px;display:inline-block;text-decoration:none}
+  .btn.ghost{background:transparent;color:var(--gold-light);border:1.5px solid var(--gold);box-shadow:none}
+  .btn.ghost:hover{background:rgba(194,160,78,.12);filter:none;transform:translateY(-2px)}
+  .bundle{margin-top:14px;text-align:center;border:1px dashed var(--line);border-radius:18px;padding:24px 26px;background:linear-gradient(160deg,var(--panel-2),var(--panel))}
+  .bundle .bk{color:var(--gold);font-size:10px;letter-spacing:.3em;text-transform:uppercase;font-weight:600}
+  .bundle h3{font-family:'Playfair Display',serif;font-weight:600;font-size:clamp(20px,3.4vw,25px);color:var(--cream);margin:10px 0 0}
+  .bundle p{font-family:'Cormorant Garamond',serif;font-size:17px;color:var(--cream-soft);margin:10px auto 0;max-width:380px;line-height:1.4}
+  .bundle a.btn{margin-top:18px;display:inline-block;text-decoration:none;padding:14px 32px;font-size:14px}
 
   .restart{display:block;margin:26px auto 0;background:none;border:none;cursor:pointer;color:var(--cream-soft);font-family:'DM Sans';font-size:13px;text-decoration:underline;text-underline-offset:3px;opacity:.75}
   .restart:hover{opacity:1;color:var(--gold-light)}
@@ -138,11 +145,11 @@
   <div class="card">
 
     <section class="screen active" id="s-intro">
-      <p class="kicker">A 60-second quiz</p>
+      <p class="kicker">Your Life Isn't Boring</p>
       <h1 class="display">What's your<br><span class="serif-it">storytelling style?</span></h1>
-      <p class="lede">You want to create. But every time you pick up your phone, you freeze. <em>You don't know what to film. You don't know what to say.</em> But more people want to hear your story than you realize, you've just got to find your style.</p>
+      <p class="lede">Discover the way you naturally create, and learn how to tell better stories from the life you're <em>already living.</em></p>
       <div class="ornament"><span></span>&#10038;<span></span></div>
-      <div class="btn-row"><button class="btn" id="start">Find my style</button></div>
+      <div class="btn-row"><button class="btn" id="start">Take the 2-minute quiz</button></div>
       <p class="meta-note">6 quick questions. No right answers, only your way of seeing.</p>
     </section>
 
@@ -160,52 +167,50 @@
     </section>
 
     <section class="screen" id="s-capture">
-      <p class="kicker">Your style is ready</p>
-      <h1 class="display" style="font-size:clamp(30px,5.6vw,46px)">Where should I send <span class="serif-it">your style?</span></h1>
-      <p class="lede">Your result and a custom framework for your style, the exact things to film and say, sent straight to your inbox.</p>
+      <p class="kicker">Your result is ready</p>
+      <h1 class="display" style="font-size:clamp(30px,5.6vw,46px)">Where should we send <span class="serif-it">your result?</span></h1>
+      <p class="lede">See your storytelling style and where to take it from here.</p>
       <div style="max-width:420px;margin:30px auto 0">
         <div class="field"><label for="fname">First name</label><input id="fname" type="text" placeholder="Your first name" autocomplete="given-name"></div>
         <div class="field"><label for="lname">Last name</label><input id="lname" type="text" placeholder="Your last name" autocomplete="family-name"></div>
         <div class="field"><label for="phone">Phone</label><input id="phone" type="tel" placeholder="(555) 555-5555" autocomplete="tel"></div>
         <div class="field"><label for="email">Email</label><input id="email" type="email" placeholder="you@email.com" autocomplete="email"></div>
         <p class="err" id="capErr"></p>
-        <div class="btn-row" style="margin-top:6px"><button class="btn" id="reveal">Reveal my style</button></div>
-        <p class="meta-note">No spam. Just your style, your framework, and the occasional story worth telling.</p>
+        <div class="btn-row" style="margin-top:6px"><button class="btn" id="reveal">Show my style</button></div>
+        <p class="meta-note">No spam. Just your result and the occasional story worth telling.</p>
       </div>
     </section>
 
     <section class="screen" id="s-result">
-      <p class="kicker" style="justify-content:center">Your storytelling style is</p>
+      <p class="kicker" style="justify-content:center">You are</p>
       <h1 class="res-name" id="rName"></h1>
       <p class="res-tag" id="rTag"></p>
-      <p class="res-body" id="rBody"></p>
+      <p class="res-body" id="rBody" style="text-align:center;max-width:480px;margin-left:auto;margin-right:auto"></p>
 
-      <div class="block reveal" style="animation-delay:.05s">
-        <h3><span class="num">01</span> What to film</h3>
-        <ul id="rFilm"></ul>
-      </div>
-      <div class="block reveal" style="animation-delay:.12s">
-        <h3><span class="num">02</span> What to say</h3>
-        <p id="rSay"></p>
-      </div>
-      <div class="block watch reveal" style="animation-delay:.19s">
-        <h3><span class="num">03</span> Your watch-out</h3>
-        <p id="rWatch"></p>
-      </div>
-
-      <div class="reward reveal" style="animation-delay:.26s">
-        <span class="rk">Your reward</span>
-        <p>Your <span class="em" id="rwName"></span> framework is on its way to your inbox, your blueprint for what to film and say, every week.</p>
-      </div>
-
-      <div class="cta reveal hidden" id="ctaBlock" style="animation-delay:.32s">
-        <span class="ck">You're ready for more</span>
-        <h2>Let's talk through your style and map your first month of content together.</h2>
-        <p>A free call to turn your style into a plan you can actually post.</p>
-        <a class="btn" id="ctaBtn" href="#">Book my call with Eren</a>
+      <div class="cta reveal" id="guideBlock" style="animation-delay:.1s">
+        <span class="ck">Your full guide</span>
+        <h2>Unlock the <span id="guideName"></span> Guide</h2>
+        <p>Your complete playbook: what to film, what to say, and your first 7 days, built for your style.</p>
+        <button class="btn" id="guideBtn">Get my guide &nbsp;&middot;&nbsp; $7.99</button>
       </div>
 
       <button class="restart" id="restart">Retake the quiz</button>
+    </section>
+
+    <section class="screen" id="s-bump">
+      <p class="kicker" style="justify-content:center">One step from your guide</p>
+      <h1 class="display" style="font-size:clamp(28px,5.2vw,42px)">Want <span class="serif-it">all of it?</span></h1>
+      <p class="lede">Add the full library and save. Your guide plus all six, for less than buying two on their own.</p>
+
+      <div class="bundle reveal" id="bumpBundle" style="animation-delay:.06s">
+        <span class="bk">Best value &middot; save 67%</span>
+        <h3>The Complete Collection</h3>
+        <p>All 6 guides: every style, plus 30 Days of Content Prompts, How to Make Errands Cinematic, and the Solo Date Guide.</p>
+        <a class="btn" id="bundleBtn" href="#" target="_blank" rel="noopener">Yes, add all 6 &nbsp;&middot;&nbsp; $24.99</a>
+      </div>
+
+      <div class="btn-row" style="margin-top:20px"><a class="btn ghost" id="guideOnlyBtn" href="#" target="_blank" rel="noopener">No thanks, just my guide &middot; $7.99</a></div>
+      <button class="restart" id="backToResult">Back</button>
     </section>
 
   </div>
@@ -213,12 +218,18 @@
 
 <script>
 const CONFIG = {
-  // Lead destination. Paste a Sheetmonkey / GHL / EmailJS webhook URL.
-  // Blank = demo mode (logs to console, no send). Payload includes
-  // name, email, style, qualified flag, and investment answer for routing.
-  captureEndpoint: "https://services.leadconnectorhq.com/hooks/DvWTrdD23UD09zv6GgZj/webhook-trigger/5d3fcc3a-edfd-4e49-b382-f8e4f3a606ca",
-  // Qualified-lead call-booking button. Point at Eren's calendar link.
-  ctaUrl: "https://api.leadconnectorhq.com/widget/booking/aCQCKyqIdvdldXNl4oNw"
+  // Eren's GHL sub-account inbound webhook (lead capture).
+  // Blank = demo mode (logs to console). Payload: firstName, lastName,
+  // phone, email, style, styleKey, answers, ts.
+  captureEndpoint: "https://services.leadconnectorhq.com/hooks/NdgTmu790fRXvDhokCk2/webhook-trigger/e91929f2-c4f1-4bed-9ae9-3c54fba8b31a",
+  // PayPal payment links per style ($7.99 each). Replace the placeholders.
+  guides: {
+    romantic: "PASTE_PAYPAL_LINK_ROMANTICIZER",
+    documentarian: "PASTE_PAYPAL_LINK_DOCUMENTARIAN",
+    guide: "PASTE_PAYPAL_LINK_TEACHER"
+  },
+  // Bundle link, all 6 guides ($24.99).
+  bundleUrl: "PASTE_PAYPAL_LINK_BUNDLE"
 };
 
 const QUESTIONS = [
@@ -242,7 +253,7 @@ const QUESTIONS = [
     { t:"That it feels so honest and vulnerable that they're able to see themselves in it", type:"documentarian" },
     { t:"That the information is so easy to understand they feel like they can immediately take action on it themselves", type:"guide" },
   ]},
-  { q:"When you think about creating content you'd make money from, what is always present?", a:[
+  { q:"When you picture content that finally feels like you, what's always present?", a:[
     { t:"It's a polished, curated experience that people are captivated by", type:"romantic" },
     { t:"Consistently realistic POV that makes my audience feel genuinely connected to me", type:"documentarian" },
     { t:"Clear, useful information that people can apply right away or share with a friend", type:"guide" },
@@ -251,21 +262,21 @@ const QUESTIONS = [
 
 // Q6 financial qualifier. Index 0 is the only disqualifying answer.
 const QUALIFIER = {
-  q:"How much would you invest in improving your content if you were finally able to get paid for it?",
+  q:"When you're ready to invest in getting your storytelling right, what feels doable for you?",
   disqualifyIndex:0,
   a:[
-    { t:"I still don't think you can make money from content so I wouldn't spend any on making it", value:"none" },
+    { t:"I'm not looking to put anything into it right now", value:"none" },
     { t:"I could start with $50 to $100", value:"50_100" },
-    { t:"For real results I would put up $250 no problem", value:"250" },
-    { t:"I'm really trying to quit my job so I would invest $500 or more", value:"500_plus" },
+    { t:"I'd happily put up $250 for the right help", value:"250" },
+    { t:"I'm all in, I'd invest $500 or more", value:"500_plus" },
   ]
 };
 
 const RESULTS = {
   romantic:{
-    name:"Romanticizing Reality",
-    tag:"You turn ordinary moments into something worth feeling.",
-    body:"You do not need a dramatic life to make beautiful content. You already see what most people walk right past: the way light lands on a counter, the quiet of an early morning, the texture of a slow afternoon. Your gift is mood, and mood is what makes people stay.",
+    name:"The Romanticizer",
+    tag:"You find beauty in everyday moments.",
+    body:"You naturally tell stories by turning ordinary moments, the light, the little rituals, the in-between, into something people actually feel.",
     film:[
       "Your morning ritual, slowed down: the pour, the steam, the light",
       "\u201CA day in my soft life\u201D sequences set to music",
@@ -276,9 +287,9 @@ const RESULTS = {
     watch:"Beauty without a point scrolls right past. Anchor each post to one small feeling or idea, so people do not just admire it, they save it.",
   },
   documentarian:{
-    name:"Digital Documentarian",
-    tag:"You prove that a real life is worth watching.",
-    body:"You do not perform, you bring people along. Your gift is presence: you make the ordinary feel intimate, and people follow because it feels like being let in. That \u201Cmy life is too boring to film\u201D story does not hold up. Boring is just undocumented.",
+    name:"The Digital Documentarian",
+    tag:"You document your life instead of performing it.",
+    body:"You naturally tell stories by bringing people along for the real, everyday moments most people never think to film.",
     film:[
       "Day-in-the-life sequences with natural, off-the-cuff narration",
       "\u201CCome with me to...\u201D anything: an errand, a class, a new city",
@@ -289,9 +300,9 @@ const RESULTS = {
     watch:"Documenting with no thread can feel aimless. Give each post a tiny destination: a question you answer or a moment you build toward.",
   },
   guide:{
-    name:"Guidance Guru",
-    tag:"You make people smarter, and they come back for more.",
-    body:"You see the steps other people miss. Your gift is clarity: you take something tangled and make it simple, which is exactly what keeps an audience loyal. You teach without making anyone feel small, and that builds trust fast.",
+    name:"The Teacher",
+    tag:"You turn what you know into content people save.",
+    body:"You naturally tell stories by making things clear, taking what you know and handing it over so people can use it right away.",
     film:[
       "\u201CHow I actually do X\u201D walkthroughs, start to finish",
       "Quick tips that fix one specific, nagging frustration",
@@ -303,8 +314,8 @@ const RESULTS = {
   },
 };
 
-const screens={intro:document.getElementById('s-intro'),quiz:document.getElementById('s-quiz'),capture:document.getElementById('s-capture'),result:document.getElementById('s-result')};
-let current=0; const TOTAL=QUESTIONS.length+1; const answers=new Array(QUESTIONS.length).fill(null); let qualIdx=null;
+const screens={intro:document.getElementById('s-intro'),quiz:document.getElementById('s-quiz'),capture:document.getElementById('s-capture'),result:document.getElementById('s-result'),bump:document.getElementById('s-bump')};
+let current=0; const TOTAL=QUESTIONS.length+1; const answers=new Array(QUESTIONS.length).fill(null); let qualIdx=null; let currentStyle=null;
 
 function show(name){Object.values(screens).forEach(s=>s.classList.remove('active'));screens[name].classList.add('active');window.scrollTo({top:0,behavior:'smooth'});}
 
@@ -356,7 +367,7 @@ function submitCapture(){
   if(CONFIG.captureEndpoint){
     fetch(CONFIG.captureEndpoint,{method:'POST',headers:{'Content-Type':'application/json'},body:JSON.stringify(payload)}).catch(()=>{});
   } else { console.log('[demo mode] lead captured:',payload); }
-  renderResult(style,qualified); show('result');
+  renderResult(style); show('result');
 }
 function scoreResult(){
   const tally={romantic:0,documentarian:0,guide:0};
@@ -365,22 +376,23 @@ function scoreResult(){
   order.forEach(k=>{if(tally[k]>tally[best])best=k;});
   return best;
 }
-function renderResult(key,qualified){
+function renderResult(key){
+  currentStyle=key;
   const r=RESULTS[key];
   document.getElementById('rName').textContent=r.name;
   document.getElementById('rTag').textContent=r.tag;
   document.getElementById('rBody').textContent=r.body;
-  const filmUl=document.getElementById('rFilm'); filmUl.innerHTML='';
-  r.film.forEach(f=>{const li=document.createElement('li');li.textContent=f;filmUl.appendChild(li);});
-  document.getElementById('rSay').textContent=r.say;
-  document.getElementById('rWatch').textContent=r.watch;
-  document.getElementById('rwName').textContent=r.name;
-  const cta=document.getElementById('ctaBlock');
-  if(qualified){cta.classList.remove('hidden');document.getElementById('ctaBtn').href=CONFIG.ctaUrl;}
-  else{cta.classList.add('hidden');}
+  document.getElementById('guideName').textContent=r.name;
 }
+// guide CTA -> order-bump step (bundle offered before checkout)
+document.getElementById('guideBtn').addEventListener('click',()=>{
+  document.getElementById('guideOnlyBtn').href=CONFIG.guides[currentStyle];
+  document.getElementById('bundleBtn').href=CONFIG.bundleUrl;
+  show('bump');
+});
+document.getElementById('backToResult').addEventListener('click',()=>show('result'));
 document.getElementById('restart').addEventListener('click',()=>{
-  current=0;answers.fill(null);qualIdx=null;
+  current=0;answers.fill(null);qualIdx=null;currentStyle=null;
   ['fname','lname','phone','email'].forEach(id=>document.getElementById(id).value='');
   capErr.textContent='';
   show('intro');
